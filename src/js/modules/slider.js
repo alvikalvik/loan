@@ -77,7 +77,32 @@ export class Slider {
 export class MainSlider extends Slider {
     constructor(sliderSelector, slidesSelector, nextSelector, prevSelector, logoSelector) {
         super(sliderSelector, slidesSelector, nextSelector, prevSelector);
-        this.logo = this.slider.querySelectorAll(logoSelector);        
+        this.logo = this.slider.querySelectorAll(logoSelector); 
+        try {
+            this.hanson = this.slider.querySelector('.hanson');
+        } catch (error) {
+            console.log(error);
+        }       
+    }
+
+    showSlide(n) {
+        super.showSlide(n);
+        if (this.slideIndex === 2) {
+            try {
+                this.showTeacherWithDelay(3000);
+            } catch (error) {
+                console.log(error);
+            }    
+        }
+    }
+
+    showTeacherWithDelay(delay) {
+        this.hanson.style.display = 'none';
+        this.hanson.classList.remove('animated', 'slideInUp');
+        setTimeout(() => {
+            this.hanson.style.display = '';
+            this.hanson.classList.add('animated', 'slideInUp');
+        }, delay);
     }
 
     render() {
