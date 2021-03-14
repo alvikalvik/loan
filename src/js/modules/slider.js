@@ -89,14 +89,14 @@ export class MainSlider extends Slider {
         super.showSlide(n);
         if (this.slideIndex === 2) {
             try {
-                this.showTeacherWithDelay(3000);
+                this.showHansonWithDelay(3000);
             } catch (error) {
                 console.log(error);
             }    
         }
     }
 
-    showTeacherWithDelay(delay) {
+    showHansonWithDelay(delay) {
         this.hanson.style.display = 'none';
         this.hanson.classList.remove('animated', 'slideInUp');
         setTimeout(() => {
