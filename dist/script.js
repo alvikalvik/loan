@@ -98,6 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/slider-main */ "./src/js/modules/slider/slider-main.js");
 /* harmony import */ var _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/slider-mini */ "./src/js/modules/slider/slider-mini.js");
 /* harmony import */ var _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/videoPlayer */ "./src/js/modules/videoPlayer.js");
+/* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
+
 
 
 
@@ -138,9 +140,61 @@ window.addEventListener('DOMContentLoaded', () => {
     animated: false
   });
   feedSlider.render();
-  const mainPlayer = new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay', 'frame');
-  mainPlayer.init();
+  new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay', 'frame').init();
+  new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officer__card-item', '.card__click').init();
+  new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officernew', '.officer__card-item', '.card__click').init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/difference.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
+class Difference {
+  constructor(containerSelector, itemsSelector, triggerSelector) {
+    this.container = document.querySelector(containerSelector);
+    this.items = this.container.querySelectorAll(itemsSelector);
+    this.trigger = this.container.querySelector(triggerSelector);
+    this.counter = 0;
+  }
+
+  hideItems() {
+    for (const item of this.items) {
+      if (item !== this.items[this.items.length - 1]) {
+        item.style.display = 'none';
+      }
+    }
+  }
+
+  handleTrigger() {
+    this.trigger.addEventListener('click', evt => {
+      if (evt.target) {
+        evt.preventDefault();
+      }
+
+      this.items[this.counter].style.display = '';
+      this.items[this.counter].classList.add('animated', 'fadeIn');
+      this.counter++;
+
+      if (this.counter >= this.items.length - 1) {
+        this.items[this.items.length - 1].remove();
+      }
+    });
+  }
+
+  init() {
+    this.hideItems();
+    this.handleTrigger();
+  }
+
+}
 
 /***/ }),
 
