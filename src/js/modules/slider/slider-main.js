@@ -3,8 +3,8 @@ import Slider from './slider';
 export default class MainSlider extends Slider {
     constructor({sliderSelector, slidesSelector, nextSelector, prevSelector, logoSelector = null} = {}) {
         super({sliderSelector, slidesSelector, nextSelector, prevSelector});
-        this.logo = this.slider.querySelectorAll(logoSelector); 
         try {
+            this.logo = this.slider.querySelectorAll(logoSelector);
             this.hanson = this.slider.querySelector('.hanson');
         } catch (error) {
             console.log(error);
@@ -32,17 +32,21 @@ export default class MainSlider extends Slider {
     }
 
     render() {
-        super.render();        
+        try {
+            super.render();        
         
-        for (const item of this.logo) {
-            item.addEventListener('click', (evt) => {
-                if (evt.target) {
-                    evt.preventDefault();
-                }
+            for (const item of this.logo) {
+                item.addEventListener('click', (evt) => {
+                    if (evt.target) {
+                        evt.preventDefault();
+                    }
 
-                this.slideIndex = 0;
-                this.showSlide(this.slideIndex);
-            });
+                    this.slideIndex = 0;
+                    this.showSlide(this.slideIndex);
+                });
+            }
+        } catch (error) {
+            
         }
     }
 }

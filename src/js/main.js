@@ -49,6 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     new Difference('.officerold', '.officer__card-item', '.card__click').init();
     new Difference('.officernew', '.officer__card-item', '.card__click').init();
-    new Forms('form', './assets/question.php').initForms();
+    new Forms('.form', './assets/question.php').initForms();
 });
 

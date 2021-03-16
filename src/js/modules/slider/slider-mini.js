@@ -52,16 +52,20 @@ export default class MiniSlider extends Slider {
     }
 
     render() {
-        super.render();
-        this.slider.style.cssText = `
-            overflow: hidden;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        `;
-        
-        if (this.autoplay) {
-            this.runAutoplay();
+        try {
+            super.render();
+            this.slider.style.cssText = `
+                overflow: hidden;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+            `;
+            
+            if (this.autoplay) {
+                this.runAutoplay();
+            }
+        } catch (error) {
+            
         }
     }
     

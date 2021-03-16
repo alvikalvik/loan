@@ -9,7 +9,7 @@ export default class Slider {
         animated = false
     } = {}) {
         this.slider = document.querySelector(sliderSelector);
-        this.slides = this.slider.querySelectorAll(slidesSelector);
+        try {this.slides = this.slider.querySelectorAll(slidesSelector);} catch(e) {}
         this.next = document.querySelectorAll(nextSelector);
         this.prev = document.querySelectorAll(prevSelector);
         this.activeClass = activeClass;
@@ -53,35 +53,39 @@ export default class Slider {
     }
 
     render() {
-        this.hideAllSlides();
-        this.showSlide(this.slideIndex);
-        
         try {
-            for (const item of this.next) {
-                item.addEventListener('click', (evt) => {
-                    if (evt.target) {
-                        evt.preventDefault();
-                    }
-    
-                    this.showNext();
-                });
-            }
+            this.hideAllSlides();
+            this.showSlide(this.slideIndex);
             
-            for (const item of this.prev) {
-                item.addEventListener('click', (evt) => {
-                    if (evt.target) {
-                        evt.preventDefault();
-                    }
-    
-                    this.showPrev();
-                });
+            try {
+                for (const item of this.next) {
+                    item.addEventListener('click', (evt) => {
+                        if (evt.target) {
+                            evt.preventDefault();
+                        }
+        
+                        this.showNext();
+                    });
+                }
+                
+                for (const item of this.prev) {
+                    item.addEventListener('click', (evt) => {
+                        if (evt.target) {
+                            evt.preventDefault();
+                        }
+        
+                        this.showPrev();
+                    });
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
-        }
 
-        // const intervalFunction = this.showNext.bind(this);
-        // setInterval(intervalFunction, 3000);
+            // const intervalFunction = this.showNext.bind(this);
+            // setInterval(intervalFunction, 3000);
+        } catch (error) {
+            
+        }
     }    
 }
 

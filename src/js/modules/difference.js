@@ -1,9 +1,13 @@
 export default class Difference {
     constructor(containerSelector, itemsSelector, triggerSelector) {
-        this.container = document.querySelector(containerSelector);
-        this.items = this.container.querySelectorAll(itemsSelector);
-        this.trigger = this.container.querySelector(triggerSelector);
-        this.counter = 0;
+        try {
+            this.container = document.querySelector(containerSelector);
+            this.items = this.container.querySelectorAll(itemsSelector);
+            this.trigger = this.container.querySelector(triggerSelector);
+            this.counter = 0;
+        } catch (error) {
+            
+        }
     }
 
     hideItems() {
@@ -31,7 +35,11 @@ export default class Difference {
     }
 
     init() {
-        this.hideItems();
-        this.handleTrigger();
+        try {
+            this.hideItems();
+            this.handleTrigger();
+        } catch (error) {
+            
+        }
     }
 }
