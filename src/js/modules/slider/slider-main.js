@@ -32,7 +32,7 @@ export default class MainSlider extends Slider {
     }
 
     render() {
-        try {
+        if (this.slider) {
             super.render();        
         
             for (const item of this.logo) {
@@ -45,8 +45,6 @@ export default class MainSlider extends Slider {
                     this.showSlide(this.slideIndex);
                 });
             }
-        } catch (error) {
-            
         }
     }
 }

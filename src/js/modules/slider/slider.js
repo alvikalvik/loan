@@ -53,7 +53,7 @@ export default class Slider {
     }
 
     render() {
-        try {
+        if (this.slider) {
             this.hideAllSlides();
             this.showSlide(this.slideIndex);
             
@@ -62,6 +62,7 @@ export default class Slider {
                     item.addEventListener('click', (evt) => {
                         if (evt.target) {
                             evt.preventDefault();
+                            evt.stopPropagation();
                         }
         
                         this.showNext();
@@ -72,6 +73,7 @@ export default class Slider {
                     item.addEventListener('click', (evt) => {
                         if (evt.target) {
                             evt.preventDefault();
+                            evt.stopPropagation();
                         }
         
                         this.showPrev();
@@ -83,8 +85,6 @@ export default class Slider {
 
             // const intervalFunction = this.showNext.bind(this);
             // setInterval(intervalFunction, 3000);
-        } catch (error) {
-            
         }
     }    
 }

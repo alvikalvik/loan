@@ -13,6 +13,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     mainSlider.render();
 
+    const modulePageSlider = new MainSlider({
+        sliderSelector: '.moduleapp',
+        slidesSelector: '.moduleapp > div',
+        nextSelector: '.next, .nextmodule',
+        prevSelector: '.prev, .prevmodule',
+        logoSelector: '.sidecontrol > a:first-child'
+    });
+    modulePageSlider.render();
+
     const showupSlider = new MiniSlider({
         sliderSelector: '.showup__content-slider',
         slidesSelector: '.showup__content-slider > .card',

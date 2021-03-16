@@ -113,6 +113,14 @@ window.addEventListener('DOMContentLoaded', () => {
     logoSelector: '.sidecontrol > a:first-child'
   });
   mainSlider.render();
+  const modulePageSlider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    sliderSelector: '.moduleapp',
+    slidesSelector: '.moduleapp > div',
+    nextSelector: '.next, .nextmodule',
+    prevSelector: '.prev, .prevmodule',
+    logoSelector: '.sidecontrol > a:first-child'
+  });
+  modulePageSlider.render();
   const showupSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
     sliderSelector: '.showup__content-slider',
     slidesSelector: '.showup__content-slider > .card',
@@ -409,7 +417,7 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
   }
 
   render() {
-    try {
+    if (this.slider) {
       super.render();
 
       for (const item of this.logo) {
@@ -422,7 +430,7 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
           this.showSlide(this.slideIndex);
         });
       }
-    } catch (error) {}
+    }
   }
 
 }
@@ -582,7 +590,7 @@ class Slider {
   }
 
   render() {
-    try {
+    if (this.slider) {
       this.hideAllSlides();
       this.showSlide(this.slideIndex);
 
@@ -591,6 +599,7 @@ class Slider {
           item.addEventListener('click', evt => {
             if (evt.target) {
               evt.preventDefault();
+              evt.stopPropagation();
             }
 
             this.showNext();
@@ -601,6 +610,7 @@ class Slider {
           item.addEventListener('click', evt => {
             if (evt.target) {
               evt.preventDefault();
+              evt.stopPropagation();
             }
 
             this.showPrev();
@@ -611,7 +621,7 @@ class Slider {
       } // const intervalFunction = this.showNext.bind(this);
       // setInterval(intervalFunction, 3000);
 
-    } catch (error) {}
+    }
   }
 
 }
