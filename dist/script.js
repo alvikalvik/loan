@@ -151,6 +151,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   feedSlider.render();
   new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay', 'frame').init();
+  new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.module__video-item .play', '.overlay', 'frame').init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officer__card-item', '.card__click').init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officernew', '.officer__card-item', '.card__click').init();
   new _modules_forms__WEBPACK_IMPORTED_MODULE_4__["default"]('.form', './assets/question.php').initForms();
@@ -645,6 +646,8 @@ class VideoPlayer {
     this.container = this.overlay.querySelector(`#${containerId}`);
     this.close = this.overlay.querySelector('.close');
     this.player = null;
+    this.url = '';
+    this.activeTrigger = null;
   }
 
   loadYoutubeApi() {
@@ -658,37 +661,78 @@ class VideoPlayer {
     this.player = new YT.Player('frame', {
       height: '100%',
       width: '100%',
-      videoId: path
+      videoId: path,
+      events: {
+        'onStateChange': this.onPlayerStateChange.bind(this)
+      }
     });
   }
 
-  init() {
-    this.loadYoutubeApi();
-    this.handleTriggers();
+  onPlayerStateChange(state) {
+    try {
+      const blockedElem = this.activeTrigger.closest('.module__video-item').nextElementSibling;
+      const playBtn = this.activeTrigger.querySelector('svg').cloneNode(true);
+
+      if (state.data === 0) {
+        if (blockedElem.querySelector('.play__circle').classList.contains('closed')) {
+          blockedElem.querySelector('.play__circle').classList.remove('closed');
+          blockedElem.querySelector('svg').remove();
+          blockedElem.querySelector('.play__circle').append(playBtn);
+          blockedElem.querySelector('.play__text').textContent = 'Play video';
+          blockedElem.querySelector('.play__text').classList.remove('attention');
+          blockedElem.style.opacity = 1;
+          blockedElem.style.filter = 'none';
+          blockedElem.dataset.disabled = 'false';
+        }
+      }
+    } catch (error) {}
   }
 
   handleTriggers() {
-    for (const trigger of this.triggers) {
+    this.triggers.forEach((trigger, i) => {
+      if (i % 2 !== 0) {
+        trigger.closest('.module__video-item').dataset.disabled = 'true';
+      }
+
       trigger.addEventListener('click', evt => {
         if (evt.target) {
           evt.preventDefault();
         }
 
-        if (this.player === null) {
-          this.createPlayer(trigger.dataset.url);
-        }
+        if (!trigger.closest('.module__video-item') || trigger.closest('.module__video-item').dataset.disabled !== 'true') {
+          this.activeTrigger = trigger;
 
-        this.overlay.style.display = 'flex';
-        this.overlay.addEventListener('click', evt => {
-          if (evt.target && (evt.target === this.overlay || evt.target === this.close)) {
-            this.overlay.style.display = 'none';
-
-            if (this.player !== null) {
-              this.player.pauseVideo();
-            }
+          if (this.player === null) {
+            this.url = trigger.dataset.url;
+            this.createPlayer(this.url);
           }
-        });
+
+          if (this.url !== trigger.dataset.url) {
+            this.url = trigger.dataset.url;
+            this.player.loadVideoById({
+              videoId: this.url
+            });
+          }
+
+          this.overlay.style.display = 'flex';
+          this.overlay.addEventListener('click', evt => {
+            if (evt.target && (evt.target === this.overlay || evt.target === this.close)) {
+              this.overlay.style.display = 'none';
+
+              if (this.player !== null) {
+                this.player.pauseVideo();
+              }
+            }
+          });
+        }
       });
+    });
+  }
+
+  init() {
+    if (this.triggers.length > 0) {
+      this.loadYoutubeApi();
+      this.handleTriggers();
     }
   }
 

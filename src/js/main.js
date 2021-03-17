@@ -55,6 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
     feedSlider.render();
 
     new VideoPlayer('.showup .play', '.overlay', 'frame').init();
+    new VideoPlayer('.module__video-item .play', '.overlay', 'frame').init();
 
     new Difference('.officerold', '.officer__card-item', '.card__click').init();
     new Difference('.officernew', '.officer__card-item', '.card__click').init();
