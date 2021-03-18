@@ -4,6 +4,7 @@ import VideoPlayer from './modules/videoPlayer';
 import Difference from './modules/difference';
 import Forms from './modules/forms';
 import ShowInfo from './modules/show-info';
+import Download from './modules/download';
 
 window.addEventListener('DOMContentLoaded', () => {
     const mainSlider = new MainSlider({
@@ -64,5 +65,7 @@ window.addEventListener('DOMContentLoaded', () => {
     new Forms('.form', './assets/question.php').initForms();
 
     new ShowInfo('.module__info-show .plus').init();
+
+    new Download('.download', 'assets/img/module_bg.jpg').init();
 });
 
