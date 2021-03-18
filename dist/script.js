@@ -100,6 +100,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/videoPlayer */ "./src/js/modules/videoPlayer.js");
 /* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_show_info__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/show-info */ "./src/js/modules/show-info.js");
+
 
 
 
@@ -155,6 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officer__card-item', '.card__click').init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officernew', '.officer__card-item', '.card__click').init();
   new _modules_forms__WEBPACK_IMPORTED_MODULE_4__["default"]('.form', './assets/question.php').initForms();
+  new _modules_show_info__WEBPACK_IMPORTED_MODULE_5__["default"]('.module__info-show .plus').init();
 });
 
 /***/ }),
@@ -355,6 +358,41 @@ class Forms {
     this.checkEmailInputs();
     this.checkEmailInputs();
     this.checkTelInputs();
+  }
+
+}
+
+/***/ }),
+
+/***/ "./src/js/modules/show-info.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/show-info.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ShowInfo; });
+class ShowInfo {
+  constructor(triggersSelector) {
+    this.triggers = document.querySelectorAll(triggersSelector);
+  }
+
+  init() {
+    this.triggers.forEach(trigger => {
+      trigger.addEventListener('click', evt => {
+        if (evt.target) {
+          evt.preventDefault();
+        }
+
+        const sibling = trigger.closest('.module__info-show').nextElementSibling;
+        sibling.classList.toggle('msg');
+        sibling.classList.toggle('animated');
+        sibling.classList.toggle('fadeInUp');
+        sibling.style.marginTop = '20px';
+      });
+    });
   }
 
 }

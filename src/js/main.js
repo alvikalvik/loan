@@ -3,6 +3,7 @@ import MiniSlider from './modules/slider/slider-mini';
 import VideoPlayer from './modules/videoPlayer';
 import Difference from './modules/difference';
 import Forms from './modules/forms';
+import ShowInfo from './modules/show-info';
 
 window.addEventListener('DOMContentLoaded', () => {
     const mainSlider = new MainSlider({
@@ -59,6 +60,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     new Difference('.officerold', '.officer__card-item', '.card__click').init();
     new Difference('.officernew', '.officer__card-item', '.card__click').init();
+
     new Forms('.form', './assets/question.php').initForms();
+
+    new ShowInfo('.module__info-show .plus').init();
 });
 
